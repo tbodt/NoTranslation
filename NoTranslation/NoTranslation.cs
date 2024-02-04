@@ -1,26 +1,13 @@
 ﻿using COSML.Modding;
-using System.Collections.Generic;
-using static COSML.Menu.MenuUtils;
-using System;
-using COSML;
 
 namespace NoTranslation
 {
-    public class NoTranslation : Mod, ILocalSettings<LocalData>, IModTogglable, IModMenu
+    public class NoTranslation : Mod, IModTogglable
     {
-        private GlobalData globalData = new GlobalData();
-        private LocalData localData = new LocalData();
-
         public NoTranslation() : base("No Translation") { }
-        public override string GetVersion() => "1.0.0";
-        public void OnLoadGlobal(GlobalData data) => globalData = data;
-        public GlobalData OnSaveGlobal() => globalData;
-        public void OnLoadLocal(LocalData data) => localData = data;
-        public LocalData OnSaveLocal() => localData;
 
         public override void Init()
         {
-            Info("Loaded NoTranslation");
             On.JournalLanguageUI.JournalPage.TryValidPage += Hook_JournalPage_TryValidPage;
             On.PageRevelator.ForceRevelated += Hook_PageRevelator_ForceRevelated;
             On.PageRevelator.GetState += Hook_PageRevelator_GetState;
@@ -30,7 +17,6 @@ namespace NoTranslation
 
         public void Unload()
         {
-            Info("Unloaded NoTranslation");
             On.JournalLanguageUI.JournalPage.TryValidPage -= Hook_JournalPage_TryValidPage;
             On.PageRevelator.ForceRevelated -= Hook_PageRevelator_ForceRevelated;
             On.PageRevelator.GetState -= Hook_PageRevelator_GetState;
@@ -58,12 +44,6 @@ namespace NoTranslation
         {
             return true;
         }
-
-        public List<IOptionData> GetMenu()
-        {
-            return new List<IOptionData>
-            {
-            };
-        }
     }
+
 }
